@@ -1,0 +1,10 @@
+table.pretty{
+    border-style: dashed;
+}
+
+td.keyelement{
+    font-weight: bold;
+}
+td.break{ 
+    word-break: break-all;
+}
