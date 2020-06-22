@@ -10,4 +10,3 @@ _build
 _static
 *.DS_Store
 reminder.txt
-djangoemailtemplate.code-workspace
