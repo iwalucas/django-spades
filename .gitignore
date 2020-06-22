@@ -1,0 +1,13 @@
+*.egg-info
+*.pyc
+*.*~
+*.orig
+*.old
+.*.swp
+build
+dist
+_build
+_static
+*.DS_Store
+reminder.txt
+djangoemailtemplate.code-workspace

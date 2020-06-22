@@ -15,7 +15,7 @@ setup(
     license='MIT License',
     description='Django app to track generic events and keep records of unstructured data.',
     long_description=README,
-    url='https://github.com/iwalucas/django-email-template/',
+    url='https://github.com/iwalucas/django-spades/',
     author='Lucas',
     author_email='teppss@gmail.com',
     classifiers=[
