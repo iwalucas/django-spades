@@ -14,24 +14,17 @@ class EventAdminForm(forms.ModelForm):
 class EventAdmin(admin.ModelAdmin):
     form = EventAdminForm
     list_display = ['name', 'created', 'last_updated', 'user',]
-    readonly_fields = ['name', 'created', 'last_updated', 'info']
+    readonly_fields = ['name', 'created', 'last_updated', 'info','user']
     date_hierarchy = 'created'
 
-    def user(self, obj):
-        data = json.loads(obj.info)
-        try:
-            user = User.objects.get(id=data['User'])
-            return user
-        except:
-            return ''
     
     class Media:
         js = (
-            'js/prettyjson.js', 
-            'js/eventadmin.js', 
+            'Spades/js/prettyjson.js', 
+            'Spades/js/eventadmin.js', 
         )
         css = { 
-            'all':('css/eventadmin.css',),
+            'all':('Spades/css/eventadmin.css',),
         } 
 
 admin.site.register(Event, EventAdmin)

@@ -10,6 +10,8 @@ from django.contrib.auth import models as auth_models
 from django.db import models as models 
 import json
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
+from django.conf import settings
 
 
 
@@ -19,7 +21,10 @@ class Event(models.Model):
     created = models.DateTimeField(auto_now_add=True, editable=False)
     last_updated = models.DateTimeField(auto_now=True, editable=False)
     info = models.TextField()
-
+    user = models.ForeignKey(
+            settings.AUTH_USER_MODEL,
+            on_delete=models.CASCADE,
+        )
 
     class Meta:
         ordering = ('-created',)
@@ -34,10 +39,20 @@ class Event(models.Model):
     def get_update_url(self):
         return reverse('EventTracker_event_update', args=(self.pk,))
 
-    def user(self):
-        j = json.loads(self.info)
-        if 'User' in j:
-            user = User.objects.get(id=j['User'])
-            return user
+    # def user(self):
+    #     j = json.loads(self.info)
+    #     if 'User' in j:
+    #         user = User.objects.get(id=j['User'])
+    #         return user
+
+    def save(self, *args, **kwargs):
+        try:
+            j = json.loads(self.info)
+        except:
+            raise ValidationError('Info needs to be of JSON format')
+
+
+        super().save(*args, **kwargs)  
+
 
 

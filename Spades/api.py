@@ -10,4 +10,5 @@ class EventViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.EventSerializer
     permission_classes = [permissions.IsAdminUser]
 
-
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
