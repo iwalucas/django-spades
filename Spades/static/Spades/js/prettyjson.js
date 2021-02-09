@@ -28,6 +28,7 @@ function prettyJson(obj) {
         table.appendChild(thead);
        
         for(var key in obj){
+            
 
             var innerRow = document.createElement('tr');
                 var tdEl = document.createElement('td');
@@ -44,10 +45,15 @@ function prettyJson(obj) {
                     ff = obj[key];
                 }
                 if (typeof(ff) == 'object'){
-                    td.appendChild(prettyJson(ff));
+                    if (Array.isArray(obj[key])){
+                        td.appendChild(tableFromJson(ff));
+
+                    }else{
+                        td.appendChild(prettyJson(ff));
+                    }
                 }else{
                     td.classList.add('break');
-                    td.innerHTML = ff;
+                    td.innerText = ff;
                 }
                 
                 innerRow.appendChild(td); 
@@ -62,4 +68,51 @@ function prettyJson(obj) {
  
     }
     return output;
-};
+}
+
+
+function tableFromJson(myArray) {
+    // the json data. (you can change the values for output.)
+
+    // Extract value from table header. 
+    // ('Book ID', 'Book Name', 'Category' and 'Price')
+    var col = [];
+    for (var i = 0; i < myArray.length; i++) {
+        for (var key in myArray[i]) {
+            if (col.indexOf(key) === -1) {
+                col.push(key);
+            }
+        }
+    }
+
+    // Create a table.
+    var table = document.createElement("table");
+
+    // Create table header row using the extracted headers above.
+    var tr = table.insertRow(-1);                   // table row.
+
+    for (var i = 0; i < col.length; i++) {
+        var th = document.createElement("th");      // table header.
+        th.innerHTML = col[i];
+        tr.appendChild(th);
+    }
+
+    // add json data to the table as rows.
+    for (var i = 0; i < myArray.length; i++) {
+
+        tr = table.insertRow(-1);
+
+        for (var j = 0; j < col.length; j++) {
+            var tabCell = tr.insertCell(-1);
+            cellVal = myArray[i][col[j]];
+            if (Array.isArray(cellVal)){
+                tabCell.appendChild(tableFromJson(cellVal));
+            }else{
+            tabCell.innerHTML = cellVal;
+            }
+        }
+    }
+
+    return table;
+
+}
