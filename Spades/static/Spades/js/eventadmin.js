@@ -1,12 +1,16 @@
 var $ = django.jQuery;
 
 window.onload = function(){
-  node =   document.querySelectorAll('div.readonly');
-  node = node[node.length-1];
+  node =   document.querySelectorAll('textarea.pretty');
 
-  node.parentNode.appendChild(prettyJson(JSON.parse(node.innerText)));
+  node.forEach(element => {
+    var holder = document.createElement('div');
+    holder.setAttribute('style','margin-top: 2rem;')
 
+    holder.appendChild(prettyJson(JSON.parse(element.value)));
+    element.parentNode.appendChild(holder);
 
-  node.innerText="";
+  });
+ 
 
 }

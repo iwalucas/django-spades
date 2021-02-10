@@ -6,16 +6,32 @@ from django.contrib.auth.models import User
 import json
 
 class EventAdminForm(forms.ModelForm):
-
+    
     class Meta:
         model = Event
-        fields = '__all__' 
+        fields = '__all__'
+        widgets = {
+            'info': forms.Textarea(attrs={
+                                    'class': 'pretty',
+                                    'disabled': True,
+                                    'rows':1, 
+                                    'cols':15
+                                    })
+        } 
 
 class EventAdmin(admin.ModelAdmin):
     form = EventAdminForm
     list_display = ['name', 'created', 'last_updated', 'user',]
-    readonly_fields = ['name', 'created', 'last_updated', 'info','user']
+    readonly_fields = ['name', 'created', 'last_updated','user']
     date_hierarchy = 'created'
+
+    fieldsets = (
+        (
+            None, {
+                'fields':('name', 'created', 'last_updated','user','info')
+            }
+        ),
+    )
 
     
     class Media:
