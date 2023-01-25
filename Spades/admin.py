@@ -23,6 +23,8 @@ class EventAdmin(admin.ModelAdmin):
     form = EventAdminForm
     list_display = ['name', 'created', 'last_updated', 'user',]
     readonly_fields = ['name', 'created', 'last_updated','user']
+    search_fields = ['info']
+    list_filter = ['name','user',]
     date_hierarchy = 'created'
 
     fieldsets = (
