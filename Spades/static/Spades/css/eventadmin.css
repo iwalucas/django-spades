@@ -1,10 +1,161 @@
-table.pretty{
-    border-style: dashed;
+/* Modern JSON viewer — follows Django admin light/dark theme variables. */
+
+textarea.jsonviz-hidden-source {
+    display: none;
 }
 
-td.keyelement{
-    font-weight: bold;
+.jsonviz-holder {
+    margin-top: 0.5rem;
+    max-width: 60rem;
 }
-td.break{ 
-    word-break: break-all;
+
+.jsonviz {
+    background: var(--darkened-bg, #f8f8f8);
+    border: 1px solid var(--border-color, #ccc);
+    border-radius: 8px;
+    overflow: hidden;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.8125rem;
+    line-height: 1.6;
+    color: var(--body-fg, #333);
 }
+
+/* Toolbar */
+
+.jsonviz-toolbar {
+    display: flex;
+    gap: 0.375rem;
+    padding: 0.5rem 0.75rem;
+    background: var(--body-bg, #fff);
+    border-bottom: 1px solid var(--border-color, #ccc);
+}
+
+.jsonviz-btn {
+    appearance: none;
+    padding: 0.2rem 0.65rem;
+    border: 1px solid var(--border-color, #ccc);
+    border-radius: 99px;
+    background: transparent;
+    color: var(--body-quiet-color, #666);
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.jsonviz-btn:hover {
+    border-color: var(--primary, #417690);
+    color: var(--primary, #417690);
+    background: var(--darkened-bg, #f8f8f8);
+}
+
+/* Tree */
+
+.jsonviz-tree {
+    padding: 0.75rem 1rem;
+    overflow-x: auto;
+}
+
+.jsonviz-children {
+    margin-left: 0.55rem;
+    padding-left: 1rem;
+    border-left: 1px solid var(--hairline-color, var(--border-color, #e0e0e0));
+}
+
+.jsonviz-branch > summary {
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    padding: 0.05rem 0.25rem;
+    border-radius: 4px;
+    user-select: none;
+}
+
+.jsonviz-branch > summary::-webkit-details-marker {
+    display: none;
+}
+
+.jsonviz-branch > summary::before {
+    content: '\25B8';
+    font-size: 0.7rem;
+    color: var(--body-quiet-color, #999);
+    transition: transform 0.15s;
+    flex-shrink: 0;
+}
+
+.jsonviz-branch[open] > summary::before {
+    transform: rotate(90deg);
+}
+
+.jsonviz-branch > summary:hover,
+.jsonviz-row:hover {
+    background: color-mix(in srgb, var(--primary, #417690) 8%, transparent);
+}
+
+.jsonviz-row {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    padding: 0.05rem 0.25rem 0.05rem 1.1rem;
+    border-radius: 4px;
+}
+
+/* Tokens */
+
+.jsonviz-key {
+    color: var(--primary, #417690);
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.jsonviz-key::after {
+    content: ':';
+    color: var(--body-quiet-color, #999);
+    font-weight: 400;
+}
+
+.jsonviz-badge {
+    font-size: 0.7rem;
+    color: var(--body-quiet-color, #888);
+}
+
+.jsonviz-value {
+    word-break: break-word;
+    white-space: pre-wrap;
+}
+
+.jsonviz-string {
+    color: #1a7f37;
+}
+
+.jsonviz-number {
+    color: #0550ae;
+}
+
+.jsonviz-bool {
+    color: #8250df;
+    font-weight: 600;
+}
+
+.jsonviz-null,
+.jsonviz-empty {
+    color: var(--body-quiet-color, #999);
+    font-style: italic;
+}
+
+.jsonviz-error {
+    color: var(--error-fg, #ba2121);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.8125rem;
+}
+
+@media (prefers-color-scheme: dark) {
+    html[data-theme="auto"] .jsonviz-string { color: #3fb950; }
+    html[data-theme="auto"] .jsonviz-number { color: #79c0ff; }
+    html[data-theme="auto"] .jsonviz-bool { color: #d2a8ff; }
+}
+
+html[data-theme="dark"] .jsonviz-string { color: #3fb950; }
+html[data-theme="dark"] .jsonviz-number { color: #79c0ff; }
+html[data-theme="dark"] .jsonviz-bool { color: #d2a8ff; }
